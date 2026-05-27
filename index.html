@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8">
+  <title>بطاقة التراث الحي</title>
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+  <style>
+
+    body{
+      font-family:Tahoma;
+      background:#efe6d8;
+      text-align:center;
+      padding:20px;
+      color:#3b2f2f;
+    }
+
+    .card{
+
+      background:#fffaf0;
+
+      max-width:420px;
+
+      margin:auto;
+
+      padding:24px;
+
+      border-radius:18px;
+
+      box-shadow:0 6px 18px rgba(0,0,0,0.15);
+
+      border:4px double #b89b5e;
+    }
+
+    h1{
+      color:#6b4f2c;
+    }
+
+    h2{
+      color:#8b6f3d;
+    }
+
+    img{
+
+      width:100%;
+
+      border-radius:12px;
+
+      margin-top:12px;
+    }
+
+    p{
+      line-height:1.8;
+    }
+
+    input{
+
+      width:80%;
+
+      padding:10px;
+
+      border-radius:10px;
+
+      border:1px solid #b89b5e;
+
+      text-align:center;
+
+      font-size:16px;
+    }
+
+    button{
+
+      margin-top:12px;
+
+      padding:10px 20px;
+
+      border:none;
+
+      border-radius:10px;
+
+      background:#8b6f3d;
+
+      color:white;
+
+      font-size:16px;
+
+      cursor:pointer;
+    }
+
+    .result{
+
+      margin-top:20px;
+
+      padding:15px;
+
+      border-radius:12px;
+
+      background:#f7f1e3;
+
+      display:none;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<div class="card">
+
+  <h1>🏛 التراث الحي</h1>
+
+  <h2>قلعة السلط</h2>
+
+  <img src="Salt_Castle.jpg">
+
+  <p>
+
+    تجربة سياحية تفاعلية
+    توثق زيارات المواقع التراثية
+    باستخدام تقنيات NFC والأنظمة الذكية.
+
+  </p>
+
+  <h3>🎟 أدخل رمز الزيارة</h3>
+
+  <input type="text"
+         id="codeInput"
+         placeholder="مثال: SALT-035">
+
+  <br>
+
+  <button onclick="verifyCode()">
+
+    تحقق
+
+  </button>
+
+  <div class="result" id="resultBox">
+
+    <h3>📜 بيانات الزيارة</h3>
+
+    <p id="message"></p>
+
+    <p>
+      عدد الزيارات:
+      <strong id="visits"></strong>
+    </p>
+
+    <p>
+      التاريخ:
+      <strong id="date"></strong>
+    </p>
+
+    <p>
+      الوقت:
+      <strong id="time"></strong>
+    </p>
+
+  </div>
+
+</div>
+
+<script>
+
+function verifyCode(){
+
+  const code =
+    document.getElementById("codeInput")
+    .value
+    .trim()
+    .toUpperCase();
+
+  if(code === ""){
+
+    alert("أدخل رمز الزيارة");
+
+    return;
+  }
+
+  let visitNumber = 1;
+
+  const parts = code.split("-");
+
+  if(parts.length >= 2){
+
+    visitNumber =
+      parseInt(parts[1]);
+  }
+
+  const now = new Date();
+
+  const date =
+    now.toLocaleDateString('ar-EG');
+
+  const time =
+    now.toLocaleTimeString('ar-EG');
+
+  let msg = "";
+
+  if(visitNumber == 1){
+
+    msg =
+    "🌿 أهلاً بك في زيارتك الأولى.";
+
+  }
+
+  else if(visitNumber <= 5){
+
+    msg =
+    "🤍 سعدنا بعودتك مرة أخرى.";
+
+  }
+
+  else if(visitNumber <= 10){
+
+    msg =
+    "✨ زياراتك المتكررة تدعم السياحة.";
+
+  }
+
+  else{
+
+    msg =
+    "🏺 أنت من الزوار الدائمين للمواقع التراثية.";
+
+  }
+
+  document.getElementById("message")
+    .textContent = msg;
+
+  document.getElementById("visits")
+    .textContent = visitNumber;
+
+  document.getElementById("date")
+    .textContent = date;
+
+  document.getElementById("time")
+    .textContent = time;
+
+  document.getElementById("resultBox")
+    .style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
