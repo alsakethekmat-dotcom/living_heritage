@@ -173,23 +173,31 @@ function verifyCode(){
     .trim()
     .toUpperCase();
 
+  // التحقق من وجود الرمز
   if(code === ""){
 
-    alert("أدخل رمز الزيارة");
+    alert("الرجاء إدخال رمز الزيارة");
 
     return;
   }
 
-  let visitNumber = 1;
+  // التحقق من الصيغة
+  const pattern = /^SALT-\d{3}$/;
 
-  const parts = code.split("-");
+  if(!pattern.test(code)){
 
-  if(parts.length >= 2){
+    alert("رمز الزيارة غير صحيح");
 
-    visitNumber =
-      parseInt(parts[1]);
+    return;
   }
 
+  // استخراج رقم الزيارة
+  const parts = code.split("-");
+
+  const visitNumber =
+    parseInt(parts[1]);
+
+  // التاريخ والوقت
   const now = new Date();
 
   const date =
@@ -198,6 +206,7 @@ function verifyCode(){
   const time =
     now.toLocaleTimeString('ar-EG');
 
+  // الرسالة
   let msg = "";
 
   if(visitNumber == 1){
@@ -228,6 +237,7 @@ function verifyCode(){
 
   }
 
+  // عرض البيانات
   document.getElementById("message")
     .textContent = msg;
 
